@@ -8,44 +8,38 @@ import FeedbackData from './data/FeedbackData'
 import AboutPage from './pages/AboutPage'
 import AboutIconLink from './components/AboutIconLink'
 
+import { FeedbackProvider } from './context/FeedbackContext'
+
 const App = () => {
   const [feedback, setFeedback] = useState(FeedbackData)
 
-  const addFeedback = (newFeedback) => {
-    newFeedback.id = feedback.length + 1 //Should use UUID. this is for the example.
-    console.log(newFeedback)
-    setFeedback([newFeedback, ...feedback])
-  }
-
-  const deleteFeedback = (id) => {
-    if (window.confirm('Are you sure?')) {
-      const filteredFeedback = feedback.filter((item) => item.id !== id)
-      setFeedback(filteredFeedback)
-    }
-  }
+  // Add & Delete Function were originally here and passed as props
+  // but then I moved it to the context provider
 
   return (
-    <Router>
-      <Header />
-      <div className="container">
-        <Routes>
-          <Route
-            exact
-            path="/"
-            element={
-              <>
-                <FeedbackForm handleAdd={addFeedback} />
-                <FeedbackStats feedback={feedback} />
-                <FeedbackList feedback={feedback} handleDelete={deleteFeedback} />
-              </>
-            }
-          ></Route>
-
-          <Route exact path="/about" element={<AboutPage />} />
-        </Routes>
-        <AboutIconLink/>
-      </div>
-    </Router>
+    <FeedbackProvider>
+      <Router>
+        <Header />
+        <div className="container">
+          <Routes>  
+            <Route
+              exact
+              path="/"
+              element={
+                <>
+                  {/* Can Delete Feedback prop as it is now in context */}
+                  <FeedbackForm />
+                  <FeedbackStats />
+                  <FeedbackList />
+                </>
+              }
+            ></Route>
+            <Route exact path="/about" element={<AboutPage />} />
+          </Routes>
+          <AboutIconLink />
+        </div>
+      </Router>
+    </FeedbackProvider>
   )
 }
 
