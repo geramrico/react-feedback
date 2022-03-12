@@ -1,3 +1,17 @@
+# Feedback UI
+
+The main objective for this projects was to get a good grasp and how React components interact with eachother and to fully understand how the basics works, such as:
+- props
+- state
+- useState
+- useEffect
+- useContext
+
+One interesting thing I learned was how I could use Context to set global state and avoid prop drilling. 
+
+The feedback slist is hardcoded as an Object so everytime you open the site, whatever you added, updated or deleted will be gone. Now I'm going to add server side to practice a more complete project.
+
+You can see the live site here: [https://react-feedback-gm.netlify.app/](https://react-feedback-gm.netlify.app/)
 
 ---
 ## Getting Started with Create React App
