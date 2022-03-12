@@ -10,16 +10,12 @@ export const FeedbackProvider = ({ children }) => {
     edit: false,
   })
 
-  //Add feedback
-  const addFeedback = (newFeedback) => {
-    newFeedback.id = feedback.length + 1 //Should use UUID. this is for the example.
-    console.log(newFeedback)
-    setFeedback([newFeedback, ...feedback])
-  }
-
   //Fetch Feedback
   const fetchFeedback = async () => {
-    const response = await fetch('http://localhost:5000/feedback?_sort=id&_order=desc')
+    // Removed "http://localhost:5000" because it is now in the
+    // package.json proxy
+
+    const response = await fetch('/feedback?_sort=id&_order=desc')
     const data = await response.json()
     setFeedback(data)
     setIsLoading(false)
@@ -29,16 +25,43 @@ export const FeedbackProvider = ({ children }) => {
     fetchFeedback()
   }, [])
 
+  //Add feedback
+  const addFeedback = async (newFeedback) => {
+    const response = await fetch('/feedback', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(newFeedback),
+    })
+
+    const data = await response.json()
+    // Backend creates the ID
+    // newFeedback.id = feedback.length + 1 //Should use UUID. this is for the example.
+    // setFeedback([newFeedback, ...feedback])
+    setFeedback([data, ...feedback]) //replace with data from backend
+  }
+
   //Delete feedback
-  const deleteFeedback = (id) => {
+  const deleteFeedback = async (id) => {
     if (window.confirm('Are you sure?')) {
+      await fetch(`/feedback/${id}`, {
+        method: 'DELETE',
+      })
       const filteredFeedback = feedback.filter((item) => item.id !== id)
       setFeedback(filteredFeedback)
     }
   }
 
-  const updateFeedback = (id, updItem) => {
-    setFeedback(feedback.map((item) => (item.id === id ? { ...item, ...updItem } : item)))
+  const updateFeedback = async (id, updItem) => {
+    const response = await fetch(`/feedback/${id}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(updItem),
+    })
+
+    const data = await response.json()
+    console.log(data);
+
+    setFeedback(feedback.map((item) => (item.id === id ? { ...item, ...data } : item)))
     setFeedbackEdit({
       item: {},
       edit: false,

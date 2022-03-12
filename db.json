@@ -1,19 +1,29 @@
 {
   "feedback": [
     {
-      "id": 1,
-      "text": "Item from the backend 1",
-      "rating": 9
+      "text": "Very good place, enjoyed it alot",
+      "rating": 10,
+      "id": 1
     },
     {
-      "id": 2,
-      "text": "Item from the backend 2 !",
-      "rating": 2
+      "text": "Wow, I was impressed",
+      "rating": 6,
+      "id": 2
     },
     {
-      "id": 3,
-      "text": "Item from the backend 3!",
-      "rating": 5
+      "text": "sucks, Ive seen better XXXXXXXXXX",
+      "rating": 2,
+      "id": 3
+    },
+    {
+      "text": "New comments UPDATED",
+      "rating": 9,
+      "id": 4
+    },
+    {
+      "text": "new one again",
+      "rating": 1,
+      "id": 5
     }
   ]
 }
